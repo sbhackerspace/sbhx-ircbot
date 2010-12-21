@@ -176,6 +176,14 @@ def inc_utter_counts():
 def get_content(keyword):
     return data.split(':!' + keyword + ' ')[1].strip('\r\n ')
 
+def remove_tags(html):
+    tags = re.findall(r"(<.*?>)", html, re.DOTALL)
+    for tag in tags:
+        print tag
+        html = html.replace(tag, '')#.replace('<', '').replace('>', '')
+    return html
+
+
 while True:
    data = irc.recv ( 4096 )
    datasp = data.split(' :')[0]
@@ -487,5 +495,26 @@ while True:
                irc_msg("!define searchterm")
 
        definition = definition.replace('&quot;', '"')
+       definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
 
+
+   if ':!urbandef' in data and ':!urbandef ' not in data:
+       irc_msg("!urbandef searchterm")
+
+   if ':!urbandef ' in data:
+       query = get_content('urbandef').replace(' ', '+')
+       url = "http://www.urbandictionary.com/define.php?term="
+       request = urllib2.Request(url + query)
+       request.add_header('User-agent', 'Mozilla 3.10')
+       html = urllib2.urlopen(request).read()
+       try:
+           definition = re.findall(r"<div class='definition'>(.*?)</div>",
+                                   html, re.DOTALL)[0]
+           if type(definition) is tuple:
+               definition = definition[0]
+       except:
+           irc_msg("!urbandef searchterm")
+       definition = definition.replace('&quot;', '"')
+       definition = remove_tags(definition)
+       irc_msg(query.replace('+', ' ') + ': ' + str(definition))
