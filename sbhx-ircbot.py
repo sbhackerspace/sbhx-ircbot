@@ -36,7 +36,7 @@ end = '\n'
 bad_on = True
 badlist = """
 Microsoft Windows iOS Apple Camarillo Ventura Russia China
-Bieber Beiber
+Bieber Beiber Gentoo
 """.split()
 
 profanity_on = True
@@ -49,7 +49,7 @@ good_on = True
 goodlist = """
 Android Python Django Ruby Rails Clojure Bash Linux Emacs
 Dropbox Wikileaks infosec DEFCON BSD hacking BackTrack
-Gentoo Slackware
+Slackware
 """.split()
 
 start_time = str(datetime.now())[:16]
