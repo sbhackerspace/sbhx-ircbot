@@ -203,7 +203,8 @@ while True:
    if 'PING' in data:
       irc.send( 'PONG ' + data.split()[1] + end )
 
-   if ':!quit' in data.lower() or ':!stats' in data.lower():
+   if ':!quit' in data.lower() or ':!stats' in data.lower() or \
+           ':!kick' in data.lower():
         message = username + " has been terminated."
         irc.send( 'KICK ' + chan_default + ' ' + username + " :" + message + end )
 
