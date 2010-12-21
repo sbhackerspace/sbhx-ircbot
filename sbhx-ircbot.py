@@ -177,7 +177,7 @@ while True:
       irc.send( 'PONG ' + data.split()[1] + end )
 
    if ':!quit' in data.lower():
-       irc_msg("I am immortal.")
+       irc_msg("/quit")
 
    if ':!time' in data:
        if ':!time24' in data:
@@ -423,3 +423,9 @@ while True:
        bad_on = False
        good_on = False
        profanity_on = False
+
+   if ':!fuckyou' in data:
+       irc_msg("Careful, " + username + "...")
+       bad_on = True
+       good_on = True
+       profanity_on = True
