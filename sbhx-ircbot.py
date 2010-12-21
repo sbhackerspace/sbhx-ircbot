@@ -28,14 +28,13 @@ else:
 
 # Detect platform
 # Windows needs \r\n, Linux just needs \n
-# if 'win' in os.uname()[0].lower():
-#     end = '\r\n'
-# else:
-end = '\n'
+# From Karuption
+try: os.uname()[0]; end = '\n'
+except: end = '\r\n'
 
 bad_on = True
 badlist = """
-Microsoft Windows iOS Apple Camarillo Ventura Russia China
+Microsoft Windows Zune iOS Apple Camarillo Ventura Russia China
 """.split()
 
 profanity_on = True
@@ -122,7 +121,7 @@ def timescrapes24():
         hours = time.split()[1].split(':')[0]
         minutes = time.split()[1].split(':')[1]
         time = ' '.join([time.split()[0], str(hours) + ':' + str(minutes)])
-        
+
     irc_msg(time)
     #str(datetime.now())[:16].split()[1]
     return
