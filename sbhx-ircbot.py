@@ -32,8 +32,8 @@ else:
 # else:
 end = '\n'
 
-shit_on = True
-shitlist = """
+bad_on = True
+badlist = """
 Microsoft Windows iOS Apple Camarillo Ventura Russia China
 """.split()
 
@@ -312,8 +312,8 @@ while True:
                    irc_msg('Hey ' + username + ': watch your mouth, motherfucker')
                    inc_bot_response_counts()
                    break
-       if shit_on:
-           for word in shitlist:
+       if bad_on:
+           for word in badlist:
                if word.lower() in data.lower() and \
                        'radioshack' not in data.lower():
                    irc_msg('Notice: ' + username +
@@ -392,16 +392,14 @@ while True:
        msg = data.split(':!echo ')[1]
        irc_msg(msg)
 
-   if ':!shitlist ' in data:
-       cmd = data.split(':!shitlist ')[1].strip()
+   if ':!badlist ' in data:
+       cmd = data.split(':!badlist ')[1].strip()
        if cmd.lower() == 'off':
-           shit_on = False
+           bad_on = False
        elif cmd.lower() == 'on':
-           shit_on = True
+           bad_on = True
        else:
-           irc_msg("You said: " + cmd.lower())
-           irc_msg("shitlist enabled? " + str(shit_on))
-           irc_msg("!shitlist on|off")
+           irc_msg("!badlist on|off")
 
    if ':!goodlist ' in data:
        cmd = data.split(':!goodlist ')[1].strip('\r\n ')
@@ -420,3 +418,8 @@ while True:
            profanity_on = True
        else:
            irc_msg("!profanity on|off")
+
+   if ':!shutup' in data:
+       bad_on = False
+       good_on = False
+       profanity_on = False
