@@ -41,7 +41,7 @@ Bieber Beiber Gentoo
 
 profanity_on = True
 profanity = """
-fuck shit bitch asshole cunt tits twat fag dick 
+fuck shit bitch asshole cunt tits twat fag dick
 """.split()
 
 #scripting project projects PCBs
@@ -509,7 +509,7 @@ while True:
        definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
 
-       
+
    if ':!urbandef' in data and ':!urbandef ' not in data:
        irc_msg("!urbandef searchterm")
 
@@ -533,3 +533,6 @@ while True:
    # From paul_be
    if ':!spider' in data.lower():
        irc_msg("/X\(-_-)/X\ ")
+
+   if ':!whoami' in data.lower():
+       irc_msg(username)
