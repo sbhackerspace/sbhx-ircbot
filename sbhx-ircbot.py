@@ -518,7 +518,7 @@ while True:
                definition = definition[0]
        except:
            irc_msg("!urbandef searchterm")
-       definition = definition.replace('&quot;', '"')
+       definition = definition.replace('&quot;', '"').replace('&amp;', '&')
        definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
 
