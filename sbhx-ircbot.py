@@ -28,18 +28,20 @@ else:
 
 # Detect platform
 # Windows needs \r\n, Linux just needs \n
-# From Karuption
-try: os.uname()[0]; end = '\n'
-except: end = '\r\n'
+# if 'win' in os.uname()[0].lower():
+#     end = '\r\n'
+# else:
+end = '\n'
 
 bad_on = True
 badlist = """
-Microsoft Windows Zune iOS Apple Camarillo Ventura Russia China
+Microsoft Windows iOS Apple Camarillo Ventura Russia China
+Bieber Beiber
 """.split()
 
 profanity_on = True
 profanity = """
-fuck shit bitch asshole cunt tits twat fag dick
+fuck shit bitch asshole cunt tits twat fag dick 
 """.split()
 
 #scripting project projects PCBs
@@ -115,13 +117,17 @@ def timescrapes24():
     time = html.split(city)[1].split('>')[3].split('<')[0]
     if time.split()[2] == 'PM':
         hours = int(time.split()[1].split(':')[0]) + 12
+        if hours == 24:
+            hours = 12;
         minutes = time.split()[1].split(':')[1]
         time = ' '.join([time.split()[0], str(hours) + ':' + str(minutes)])
-    elif time.split()[2] == 'AM':
-        hours = time.split()[1].split(':')[0]
+    else: # if 'AM'
+        hours = int(time.split()[1].split(':')[0])
+        if hours == 12:
+            hours = 0;
         minutes = time.split()[1].split(':')[1]
         time = ' '.join([time.split()[0], str(hours) + ':' + str(minutes)])
-
+        #time = ' '.join(time.split()[:2])
     irc_msg(time)
     #str(datetime.now())[:16].split()[1]
     return
@@ -197,8 +203,9 @@ while True:
    if 'PING' in data:
       irc.send( 'PONG ' + data.split()[1] + end )
 
-   if ':!quit' in data.lower():
-       irc_msg("I am immortal.")
+   if ':!quit' in data.lower() or ':!stats' in data.lower():
+        message = username + " has been terminated."
+        irc.send( 'KICK ' + chan_default + ' ' + username + " :" + message + end )
 
    if ':!time' in data:
        if ':!time24' in data:
@@ -320,7 +327,7 @@ while True:
        irc.send('PRIVMSG ' + username + ' :You have ' +
                 str(msg_count) + ' private message(s):' + end)
        for m in range(msg_count):
-           irc.send('PRIVMSG ' + username + ' :' +
+           irc.send('PRIVMSG ' + username + ' : ' +
                     left_priv_messages[username][m] + end)
        del left_priv_messages[username]
 
@@ -336,7 +343,8 @@ while True:
        if bad_on:
            for word in badlist:
                if word.lower() in data.lower() and \
-                       'radioshack' not in data.lower():
+                       'radioshack' not in data.lower() and \
+		       'fios' not in data.lower():
                    irc_msg('Notice: ' + username +
                            ' is a dipshit for mentioning ' + word)
                    inc_bot_response_counts()
@@ -379,22 +387,22 @@ while True:
        irc_msg('Current Members (from wiki): ' + ', '.join(member_list))
        inc_bot_response_counts()
 
-   if ':!stats' in data:
-       priv_msg(username, "Since " + start_time)
-       priv_msg(username, "----------------------")
-       priv_msg(username, "Total Speakers: %d" % len(utter_counts))
-       total_utter = sum([utter_counts[nick] for nick in utter_counts])
-       priv_msg(username, "Total Utterances: %d" % total_utter)
-       total_bot_utter = sum([bot_response_counts[nick]
-                              for nick in bot_response_counts])
-       priv_msg(username, "Total Bot Responses: %d" % total_bot_utter)
-       nick_width = max([len(nick) for nick in utter_counts])
-       priv_msg(username, "") # Blank line
-       priv_msg(username, "Nick%sMsg Count" % (' ' * nick_width))
-       priv_msg(username, "%s" % ('-' * (nick_width+13)))
-       for nick in utter_counts:
-           priv_msg(username, nick + ' ' + str(utter_counts[nick]))
-       inc_bot_response_counts()
+   # if ':!stats' in data:
+       # priv_msg(username, "Since " + start_time)
+       # priv_msg(username, "----------------------")
+       # priv_msg(username, "Total Speakers: %d" % len(utter_counts))
+       # total_utter = sum([utter_counts[nick] for nick in utter_counts])
+       # priv_msg(username, "Total Utterances: %d" % total_utter)
+       # total_bot_utter = sum([bot_response_counts[nick]
+       #                        for nick in bot_response_counts])
+       # priv_msg(username, "Total Bot Responses: %d" % total_bot_utter)
+       # nick_width = max([len(nick) for nick in utter_counts])
+       # priv_msg(username, "") # Blank line
+       # priv_msg(username, "Nick%sMsg Count" % (' ' * nick_width))
+       # priv_msg(username, "%s" % ('-' * (nick_width+13)))
+       # for nick in utter_counts:
+       #     priv_msg(username, nick + ' ' + str(utter_counts[nick]))
+       # inc_bot_response_counts()
 
    if ":!userlist" in data:
        irc_msg("/userlist")
@@ -500,7 +508,7 @@ while True:
        definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
 
-
+       
    if ':!urbandef' in data and ':!urbandef ' not in data:
        irc_msg("!urbandef searchterm")
 
@@ -517,10 +525,6 @@ while True:
                definition = definition[0]
        except:
            irc_msg("!urbandef searchterm")
-       definition = definition.replace('&quot;', '"').replace('&amp;', '&')
+       definition = definition.replace('&quot;', '"')
        definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
-
-   # From paul_be
-   if ':!spider' in data.lower():
-       irc_msg("/X\(-_-)/X\ ")
