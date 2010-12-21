@@ -528,3 +528,7 @@ while True:
        definition = definition.replace('&quot;', '"')
        definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
+
+   # From paul_be
+   if ':!spider' in data.lower():
+       irc_msg("/X\(-_-)/X\ ")
