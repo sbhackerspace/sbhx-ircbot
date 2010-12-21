@@ -27,26 +27,29 @@ else:
 
 # Detect platform
 # Windows needs \r\n, Linux just needs \n
-if 'win' in os.uname()[0].lower():
-    end = '\r\n'
-else:
-    end = '\n'
+# if 'win' in os.uname()[0].lower():
+#     end = '\r\n'
+# else:
+end = '\n'
 
-#iPhone Mac 
+#iPhone Mac Karuption
 shitlist = """
-Microsoft Windows iOS Apple Camarillo Ventura Russia China Karuption
+Microsoft Windows iOS Apple Camarillo Ventura Russia China
 """.split()
 
 # piss
 profanity = """
-fuck shit bitch asshole cunt tits twat 
+fuck shit bitch asshole cunt tits twat
 """.split()
 
 #scripting project projects PCBs
 goodlist = """
 Android Python Django Ruby Rails Clojure Bash Linux Emacs
-Dropbox EFF Wikileaks infosec DEFCON 
+Dropbox EFF Wikileaks infosec DEFCON BSD hacking BackTrack
+Gentoo Slackware 
 """.split()
+
+start_time = str(datetime.now())[:16]
 
 port = 6667
 
@@ -59,8 +62,12 @@ irc.send( 'USER ' + USER + 'bot botty bot bot: Python IRC' + end )
 irc.send( 'JOIN ' + chatchannel + end )
 
 # Used to store messages users leave for one another
-messages = {}
+left_messages = {}
 priv_messages = {}
+
+# Dictionaries of the form d == {'username1': 4, 'username2': 17}
+utter_counts = {}
+bot_response_counts = {}
 
 # DO NOT CONFUSE THIS WITH irc.msg
 def irc_msg(msg):
@@ -72,7 +79,8 @@ def getuser():
     """Returns nick of current message author"""
     try:
         #user = data.split()[2].strip(':')
-        user = data.split()[0].split('~')[0].strip(':!')
+        #user = data.split()[0].split('~')[0].strip(':!')
+        user = data.split()[0].split('!')[0].strip(':')
     except:
         user = data.split('!')[0].strip(':')
     return user
@@ -81,7 +89,7 @@ def timescrapes():
     """Sends current time in given city to IRC channel"""
     html = urllib2.urlopen('http://www.timeanddate.com/worldclock/').read()
     local = 'Los Angeles'
-    city = data.split(':!time')[1].strip("\r\n ")
+    city = data.split(':!time ')[1]
     if not city:
         city = local
     city = ' '.join([word.capitalize() for word in city.split()]) #cap words
@@ -93,7 +101,7 @@ def timescrapes24():
     """Sends current time in given city to IRC channel"""
     html = urllib2.urlopen('http://www.timeanddate.com/worldclock/').read()
     local = 'Los Angeles'
-    city = data.split(':!time24')[1].strip("\r\n ")
+    city = data.split(':!time24 ')[1]
     if not city:
         city = local
     city = ' '.join([word.capitalize() for word in city.split()]) #cap words
@@ -137,12 +145,28 @@ def writea():
     dbfile.write(link + str(dbold))
     dbfile.close()
 
+def inc_bot_response_counts():
+   try:
+       bot_response_counts[username] += 1
+   except:
+       #bot_response_counts[username] = 1
+       print "inc_bot_response_counts is broken"
+
+def inc_utter_counts():
+   try:
+       utter_counts[username] += 1
+   except:
+       #utter_counts[username] = 1
+       print "inc_utter_counts is broken"
+
+
 while True:
    data = irc.recv ( 4096 )
    datasp = data.split(' :')[0]
    datasp = str(datasp)
 
    username = getuser()
+   inc_utter_counts()
 
    if 'PING' in data:
       irc.send( 'PONG ' + data.split()[1] + end )
@@ -150,8 +174,8 @@ while True:
    if ':!quit' in data.lower():
        irc_msg("I am immortal.")
 
-   if ':!time' in data:
-       if ':!time24' in data:
+   if ':!time ' in data:
+       if ':!time24 ' in data:
            try:
                timescrapes24()
            except:
@@ -178,23 +202,31 @@ while True:
       irc.send( 'JOIN ' + chatchannel + end )
 
    # Return URLs to Google search queries
-   if ':!google' in data:
-       query = data.split(':!google')[1].strip().replace(' ','+')
+   if ':!google ' in data:
+       query = data.split(':!google ')[1].strip().replace(' ','+')
        search = "http://www.google.com/search?q=" + query
+       irc_msg(search)
+
+   if ':!lucky ' in data:
+       try:
+           query = data.split(':!lucky ')[1].strip().replace(' ','+')
+       except:
+           irc_msg("!lucky <search_term>")
+       search = "http://www.google.com/search?btnI=I'm+Feeling+Lucky&q=" + query
        irc_msg(search)
 
    if ':!wikilink ' in data:
        url = data.split(':!wikilink ')[1]
        html = urllib2.urlopen('http://sbhackerspace.com/wiki/index.php?title=Links&action=edit').read()
-       text_area = re.findall(r'<textarea.*>(.*)</textarea>', html, re.DOTALL)[0]
+       textarea = re.findall(r'<textarea.*>(.*)</textarea>', html, re.DOTALL)[0]
        appended_data = end + '* ' + url
-       new_text_area = text_area + appended_data
-       print new_text_area
+       new_textarea = textarea + appended_data
+       print new_textarea
    print data
 
    # Save messages to a dictionary of the form
    # dict['recipient'] = ['message 1', 'message 2', 'message 3']
-   if ':!msg' in data:
+   if ':!msg ' in data:
        try:
            recip, msg = data.split(':!msg ')[1].strip("\r\n ").split(' ', 1)
        except:
@@ -207,27 +239,32 @@ while True:
        except:
            msg = username + ' tried to crash the bot. Bastard.'
        try:
-           messages[recip].append(msg)
+           left_messages[recip].append(msg)
        except KeyError:
-           messages[recip] = []
-           messages[recip].append(msg)
+           left_messages[recip] = []
+           left_messages[recip].append(msg)
        except:
            pass
            #irc_msg(username + ' is trying to kill me!')
 
    # Send messages to user but only if they say something in
    # the channel, not because they've joined, quit, etc
-   if username in messages and 'ACTION' not in data \
+   if username in left_messages and 'ACTION' not in data \
            and 'QUIT' not in data and 'JOIN' not in data \
            and 'KICK' not in data:
-       msg_count = len(messages[username])
-       irc_msg(username + ' has ' + str(msg_count) + ' message(s)! ')
-       for m in range(msg_count):
-           irc_msg(messages[username][m])
-       del messages[username]
+       utter_counts = len(left_messages[username])
+       irc_msg(username + ' has ' + str(utter_counts) + ' message(s)! ')
+       for m in range(utter_counts):
+           irc_msg(left_messages[username][m])
+       del left_messages[username]
 
-   if ':!privmsg' in data:
-       recip, msg = data.split(':!privmsg ')[1].strip("\r\n ").split(' ', 1)
+   if ':!privmsg ' in data:
+       try:
+           recip, msg = data.split(':!privmsg ')[1].strip("\r\n ").split(' ', 1)
+       except:
+           irc_msg("Options: !time <city>, !msg <recipient> <message>, " + \
+                       "!privmsg <recipient> <message>")
+           msg = ""
        date, time = str(datetime.now())[:16].split()  # Ghetto, but works
        msg += " (from " + username + " at " + time + " on " + date + ")"
        try:
@@ -238,37 +275,61 @@ while True:
        except:
            irc_msg(username + 'fucked up my code. Bastard.')
 
-   if username in priv_messages:
-       msg_count = len(priv_messages[username])
-       irc.send('PRIVMSG ' + username + ' : You have ' +
-                str(msg_count) + ' private message(s):' + end)
-       for m in range(msg_count):
-           irc.send('PRIVMSG ' + username + ' : ' + priv_messages[username][m] + end)
-       del priv_messages[username]
+   # if ':!privmsg ' in data:
+   #     try:
+   #         recip, msg = data.split(':!privmsg ')[1].strip("\r\n ").split(' ', 1)
+   #     except:
+   #         irc_msg("Options: !time <city>, !msg <recipient> <message>, " + \
+   #                     "!privmsg <recipient> <message>")
+   #     date, time = str(datetime.now())[:16].split()  # Ghetto, but works
+   #     msg += " (from " + username + " at " + time + " on " + date + ")"
+   #     try:
+   #         priv_messages[recip].append(msg)
+   #     except KeyError:
+   #         priv_messages[recip] = []
+   #         priv_messages[recip].append(msg)
+   #     except:
+   #         irc_msg(username + 'fucked up my code. Bastard.')
+
+   # if username in priv_messages:
+   #     utter_counts = len(priv_messages[username])
+   #     irc.send('PRIVMSG ' + username + ' : You have ' +
+   #              str(utter_counts) + ' private message(s):' + end)
+   #     for m in range(utter_counts):
+   #         irc.send('PRIVMSG ' + username + ' : ' + priv_messages[username][m] + end)
+   #     del priv_messages[username]
 
    if '_bot' not in username.lower():
        for word in profanity:
            if word.lower() in data.lower() and \
                    'motherfucker' not in data.lower():
                irc_msg('Hey ' + username + ': watch your mouth, motherfucker')
+               inc_bot_response_counts()
+               break
        for word in shitlist:
            if word.lower() in data.lower():
                irc_msg('Notice: ' + username +
                        ' is a dipshit for mentioning ' + word)
+               inc_bot_response_counts()
+               break
        for word in goodlist:
            if word.lower() in data.lower():
                irc_msg('Notice: ' + username +
                        ' is redeemed for mentioning ' + word)
+               inc_bot_response_counts()
+               break
 
    if ':!wiki ' in data:
        page = data.split(':!wiki ')[1]
        url = "http://sbhackerspace.com/wiki/index.php?title="
        irc_msg(url + page)
+       inc_bot_response_counts()
 
    if ':!help' in data:
        irc_msg("Slut.")
        irc_msg("Options: !time <city>, !msg <recipient>, !privmsg <recipient>")
        #irc_msg("More: !")
+       inc_bot_response_counts()
 
    # if username == 'paul_be' or username == 'm0tan':
    #     irc_msg('Hey ' + username + ', am I annoying yet?')
@@ -280,8 +341,44 @@ while True:
        member_list = []
        #url = data.split(':!members')[1]
        html = urllib2.urlopen('http://sbhackerspace.com/wiki/index.php?title=Members&action=edit').read()
-       text_area = re.findall(r'<textarea.*>(.*)</textarea>', html, re.DOTALL)[0]
-       for line in text_area.split('\n'):
+       textarea = re.findall(r'<textarea.*>(.*)</textarea>', html, re.DOTALL)[0]
+       for line in textarea.split('\n'):
            member_list.append(line.split(',')[0].split()[-1].replace(']', ''))
        irc_msg('Current Members (from wiki): ' + ', '.join(member_list))
+       inc_bot_response_counts()
 
+   # if ':!stats' in data:
+   #     irc_msg("Since " + start_time)
+   #     irc_msg("----------------------")
+   #     irc_msg("Total Speakers: %d" % len(utter_counts))
+   #     total_utter = sum([utter_counts[nick] for nick in utter_counts])
+   #     irc_msg("Total Utterances: %d" % total_utter)
+   #     total_bot_utter = sum([bot_response_counts[nick]
+   #                            for nick in bot_response_counts])
+   #     irc_msg("Total Bot Responses: %d" % total_bot_utter)
+   #     nick_width = max([len(nick) for nick in utter_counts])
+   #     irc_msg("") # Blank line
+   #     irc_msg("Nick%sMsg Count" % (' ' * nick_width))
+   #     irc_msg("%s" % ('-' * (nick_width+13)))
+   #     for nick in utter_counts:
+   #         irc_msg(nick + ' ' + str(utter_counts[nick]))
+   #     inc_bot_response_counts()
+
+   if ":!userlist" in data:
+       irc_msg("/userlist")
+
+   if ':!ircbot ' in data:
+       url = data.split(':!ircbot ')[1]
+       html = urllib2.urlopen('http://stevendphillips.com/ircbot/@edit/index').read()
+       textarea = re.findall(r'<textarea.*>(.*)</textarea>', html, re.DOTALL)[0]
+       print textarea
+       print '\n\n\n\n'
+       appended_data = '* ' + url
+       new_textarea = textarea + appended_data
+       # HTTP POST
+       for line in [line.strip() for line in new_textarea.split('\n')]:
+           irc_msg(line)
+
+   if ':!echo ' in data:
+       msg = data.split(':!echo ')[1]
+       irc_msg(msg)
