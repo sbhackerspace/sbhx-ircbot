@@ -118,8 +118,11 @@ def timescrapes24():
         hours = int(time.split()[1].split(':')[0]) + 12
         minutes = time.split()[1].split(':')[1]
         time = ' '.join([time.split()[0], str(hours) + ':' + str(minutes)])
-    else:
-        time = ' '.join(time.split()[:2])
+    elif time.split()[2] == 'AM':
+        hours = time.split()[1].split(':')[0]
+        minutes = time.split()[1].split(':')[1]
+        time = ' '.join([time.split()[0], str(hours) + ':' + str(minutes)])
+        
     irc_msg(time)
     #str(datetime.now())[:16].split()[1]
     return
@@ -318,7 +321,7 @@ while True:
        irc.send('PRIVMSG ' + username + ' :You have ' +
                 str(msg_count) + ' private message(s):' + end)
        for m in range(msg_count):
-           irc.send('PRIVMSG ' + username + ' : ' +
+           irc.send('PRIVMSG ' + username + ' :' +
                     left_priv_messages[username][m] + end)
        del left_priv_messages[username]
 
@@ -518,3 +521,7 @@ while True:
        definition = definition.replace('&quot;', '"')
        definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
+
+   # From paul_be
+   if ':!spider' in data.lower():
+       irc_msg("/X\(-_-)/X\ ")
