@@ -32,20 +32,21 @@ else:
 # else:
 end = '\n'
 
-#iPhone Mac Karuption
+shit_on = True
 shitlist = """
 Microsoft Windows iOS Apple Camarillo Ventura Russia China
 """.split()
 
-# piss
+profanity_on = True
 profanity = """
-fuck shit bitch asshole cunt tits twat
+fuck shit bitch asshole cunt tits twat fag dick
 """.split()
 
 #scripting project projects PCBs
+good_on = True
 goodlist = """
 Android Python Django Ruby Rails Clojure Bash Linux Emacs
-Dropbox EFF Wikileaks infosec DEFCON BSD hacking BackTrack
+Dropbox Wikileaks infosec DEFCON BSD hacking BackTrack
 Gentoo Slackware 
 """.split()
 
@@ -89,10 +90,12 @@ def timescrapes():
     """Sends current time in given city to IRC channel"""
     html = urllib2.urlopen('http://www.timeanddate.com/worldclock/').read()
     local = 'Los Angeles'
-    city = data.split(':!time ')[1]
+    city = data.split(':!time')[1].strip('\r\n ')
+    print "city = ", city
     if not city:
         city = local
     city = ' '.join([word.capitalize() for word in city.split()]) #cap words
+    print "city = ", city
     time = html.split(city)[1].split('>')[3].split('<')[0]
     irc_msg(time)
     return
@@ -101,7 +104,7 @@ def timescrapes24():
     """Sends current time in given city to IRC channel"""
     html = urllib2.urlopen('http://www.timeanddate.com/worldclock/').read()
     local = 'Los Angeles'
-    city = data.split(':!time24 ')[1]
+    city = data.split(':!time24')[1].strip('\r\n ')
     if not city:
         city = local
     city = ' '.join([word.capitalize() for word in city.split()]) #cap words
@@ -146,18 +149,20 @@ def writea():
     dbfile.close()
 
 def inc_bot_response_counts():
-   try:
-       bot_response_counts[username] += 1
-   except:
-       #bot_response_counts[username] = 1
-       print "inc_bot_response_counts is broken"
+    pass
+   # try:
+   #     bot_response_counts[username] += 1
+   # except:
+   #     #bot_response_counts[username] = 1
+   #     print "inc_bot_response_counts is broken"
 
 def inc_utter_counts():
-   try:
-       utter_counts[username] += 1
-   except:
-       #utter_counts[username] = 1
-       print "inc_utter_counts is broken"
+    pass
+   # try:
+   #     utter_counts[username] += 1
+   # except:
+   #     #utter_counts[username] = 1
+   #     print "inc_utter_counts is broken"
 
 
 while True:
@@ -174,8 +179,8 @@ while True:
    if ':!quit' in data.lower():
        irc_msg("I am immortal.")
 
-   if ':!time ' in data:
-       if ':!time24 ' in data:
+   if ':!time' in data:
+       if ':!time24' in data:
            try:
                timescrapes24()
            except:
@@ -300,24 +305,28 @@ while True:
    #     del priv_messages[username]
 
    if '_bot' not in username.lower():
-       for word in profanity:
-           if word.lower() in data.lower() and \
-                   'motherfucker' not in data.lower():
-               irc_msg('Hey ' + username + ': watch your mouth, motherfucker')
-               inc_bot_response_counts()
-               break
-       for word in shitlist:
-           if word.lower() in data.lower():
-               irc_msg('Notice: ' + username +
-                       ' is a dipshit for mentioning ' + word)
-               inc_bot_response_counts()
-               break
-       for word in goodlist:
-           if word.lower() in data.lower():
-               irc_msg('Notice: ' + username +
-                       ' is redeemed for mentioning ' + word)
-               inc_bot_response_counts()
-               break
+       if profanity_on:
+           for word in profanity:
+               if word.lower() in data.lower() and \
+                       'motherfucker' not in data.lower():
+                   irc_msg('Hey ' + username + ': watch your mouth, motherfucker')
+                   inc_bot_response_counts()
+                   break
+       if shit_on:
+           for word in shitlist:
+               if word.lower() in data.lower() and \
+                       'radioshack' not in data.lower():
+                   irc_msg('Notice: ' + username +
+                           ' is a dipshit for mentioning ' + word)
+                   inc_bot_response_counts()
+                   break
+       if good_on:
+           for word in goodlist:
+               if word.lower() in data.lower():
+                   irc_msg('Notice: ' + username +
+                           ' is redeemed for mentioning ' + word)
+                   inc_bot_response_counts()
+                   break
 
    if ':!wiki ' in data:
        page = data.split(':!wiki ')[1]
@@ -382,3 +391,32 @@ while True:
    if ':!echo ' in data:
        msg = data.split(':!echo ')[1]
        irc_msg(msg)
+
+   if ':!shitlist ' in data:
+       cmd = data.split(':!shitlist ')[1].strip()
+       if cmd.lower() == 'off':
+           shit_on = False
+       elif cmd.lower() == 'on':
+           shit_on = True
+       else:
+           irc_msg("You said: " + cmd.lower())
+           irc_msg("shitlist enabled? " + str(shit_on))
+           irc_msg("!shitlist on|off")
+
+   if ':!goodlist ' in data:
+       cmd = data.split(':!goodlist ')[1].strip('\r\n ')
+       if cmd.lower() == 'off':
+           good_on = False
+       elif cmd.lower() == 'on':
+           good_on = True
+       else:
+           irc_msg("!goodlist on|off")
+           
+   if ':!profanity ' in data:
+       cmd = data.split(':!profanity ')[1].strip('\r\n ')
+       if cmd.lower() == 'off':
+           profanity_on = False
+       elif cmd.lower() == 'on':
+           profanity_on = True
+       else:
+           irc_msg("!profanity on|off")
