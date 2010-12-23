@@ -2,7 +2,7 @@ import socket, urllib2, re, os
 import urllib, httplib
 from datetime import datetime
 
-USER = 'elimisteve'
+USER = 'sbhx'
 auto_connect = True
 
 bot_default     = USER + "_bot"
@@ -534,5 +534,5 @@ while True:
    if ':!spider' in data.lower():
        irc_msg("/X\(-_-)/X\ ")
 
-   if ':!whoami' in data.lower():
+   if ':!whoami' in data.lower() or ':!saymyname' in data.lower():
        irc_msg(username)
