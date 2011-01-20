@@ -198,7 +198,7 @@ while True:
    datasp = str(datasp)
 
    username = getuser()
-   inc_utter_counts()
+#   inc_utter_counts()
 
    if 'PING' in data:
       irc.send( 'PONG ' + data.split()[1] + end )
@@ -536,3 +536,18 @@ while True:
 
    if ':!whoami' in data.lower() or ':!saymyname' in data.lower():
        irc_msg(username)
+
+   if ':!cupcake' in data.lower():
+       irc_msg("           )")
+       irc_msg("          (.)")
+       irc_msg("          .|.")
+       irc_msg("          l7J")
+       irc_msg("          | |")
+       irc_msg("      _.--| |--._")
+       irc_msg("   .-';  ;`-'& ; `&.")
+       irc_msg("  & &  ;  &   ; ;   \ ")
+       irc_msg("  \      ;    &   &_/")
+       irc_msg("   F\"\"\"---...---\"\"\"J")
+       irc_msg("   | | | | | | | | |")
+       irc_msg("   J | | | | | | | F")
+       irc_msg("    `---.|.|.|.---\'")
