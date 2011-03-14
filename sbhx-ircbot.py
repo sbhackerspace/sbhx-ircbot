@@ -33,19 +33,19 @@ else:
 # else:
 end = '\n'
 
-bad_on = True
+bad_on = False
 badlist = """
 Microsoft Windows iOS Apple Camarillo Ventura Russia China
 Bieber Beiber Gentoo
 """.split()
 
-profanity_on = True
+profanity_on = False
 profanity = """
 fuck shit bitch asshole cunt tits twat fag dick
 """.split()
 
 #scripting project projects PCBs
-good_on = True
+good_on = False
 goodlist = """
 Android Python Django Ruby Rails Clojure Bash Linux Emacs
 Dropbox Wikileaks infosec DEFCON BSD hacking BackTrack
@@ -97,11 +97,11 @@ def timescrapes():
     html = urllib2.urlopen('http://www.timeanddate.com/worldclock/').read()
     local = 'Los Angeles'
     city = data.split(':!time')[1].strip('\r\n ')
-    print "city = ", city
+    print "city = " + city
     if not city:
         city = local
     city = ' '.join([word.capitalize() for word in city.split()]) #cap words
-    print "city = ", city
+    print "city = " + city
     time = html.split(city)[1].split('>')[3].split('<')[0]
     irc_msg(time)
     return
