@@ -162,7 +162,7 @@ def writea():
     dbfile.close()
 
 def inc_bot_response_counts():
-   try:
+   try:  ### Slide right one space
        bot_response_counts[username] += 1
        print "Bot responses to", username, " ==", bot_response_counts[username]
    except:
@@ -530,13 +530,14 @@ while True:
        definition = remove_tags(definition)
        irc_msg(query.replace('+', ' ') + ': ' + str(definition))
 
-   # From paul_be
+    # From paul_be
    if ':!spider' in data.lower():
        irc_msg("/X\(-_-)/X\ ")
 
    if ':!whoami' in data.lower() or ':!saymyname' in data.lower():
        irc_msg(username)
 
+    # Also from paul_be
    if ':!cupcake' in data.lower():
        irc_msg("           )")
        irc_msg("          (.)")
