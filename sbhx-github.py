@@ -51,7 +51,7 @@ repo_names = ['sbhx-snippets']
               #'sbhx-androidapp', 'sbhx-projecteuler'
               ## These two don't get parsed correctly for some reason...
               #]
-SLEEP_SECONDS = float(60*2)/len(repo_names)  # Check each repo once/2 minutes
+SLEEP_SECONDS = float(60*3)/len(repo_names)  # Check each repo once/couple minutes
 
 def check_github():
     old_version = {}
