@@ -46,8 +46,8 @@ def getuser():
 #
 account_name = 'sbhackerspace'
 branch = 'master'
-repo_names = ['sbhx-snippets']
-              #'sbhx-ircbot', 'sbhx-rov', 'sbhx-sicp',
+repo_names = ['sbhx-snippets',
+              'sbhx-ircbot', 'sbhx-rov', 'sbhx-sicp']
               #'sbhx-androidapp', 'sbhx-projecteuler'
               ## These two don't get parsed correctly for some reason...
               #]
