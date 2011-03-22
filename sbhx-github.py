@@ -66,13 +66,18 @@ def check_github():
     for repo in repo_names:
         new = feedparser.parse('https://github.com/' + account_name +
                                '/' + repo + '/commits/' + branch + '.atom')
-
-        if new.entries[0] != old_version[repo].entries[0]:
-            #author = new.entries[0].author.split()[0]  # First name
-            author = new.entries[0].author_detail.href.split('/')[-1]
-            commit_msg = new.entries[0].title
-            irc_msg(author + " committed to " + repo + ": " + commit_msg)
-
+        try:
+            if new.entries[0] != old_version[repo].entries[0]:
+                #author = new.entries[0].author.split()[0]  # First name
+                author = new.entries[0].author_detail.href.split('/')[-1]
+                commit_msg = new.entries[0].title
+                print '\n'
+                print "[" + repo + "] " + author + ": " + commit_msg
+                print '\n'
+                irc_msg("[" + repo + "] " + author + ": " + commit_msg)
+        except:
+            print "GitHub fucked up, I think. Her's what they gave us:"
+            print new
 #
 # Main loop
 #
