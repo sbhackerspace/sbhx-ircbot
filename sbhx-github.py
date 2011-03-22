@@ -51,7 +51,7 @@ repo_names = ['sbhx-snippets',
               #'sbhx-androidapp', 'sbhx-projecteuler'
               ## These two don't get parsed correctly for some reason...
               #]
-SLEEP_SECONDS = float(60*3)/len(repo_names)  # Check each repo once/couple minutes
+SLEEP_SECONDS = float(60*2.4)/len(repo_names)  # Check each repo once/couple minutes
 
 def check_github():
     old_version = {}
@@ -76,7 +76,7 @@ def check_github():
                 print '\n'
                 irc_msg("[" + repo + "] " + author + ": " + commit_msg)
         except:
-            print "GitHub fucked up, I think. Her's what they gave us:"
+            print "GitHub fucked up, I think. Here's what they gave us:"
             print new
 #
 # Main loop
