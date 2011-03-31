@@ -7,12 +7,16 @@ import urllib, httplib
 from datetime import datetime
 import time
 
+COMMAND_LIST = """!batman !facpalm !frylock !iggy !unccliff !bunny
+!monkey !spider !karuption
+""".split()
+
 USER = 'mr_ascii'
 auto_connect = True
 
 bot_default     = USER + "_bot"
 network_default = 'irc.freenode.net'
-chan_default    = '#sbhx-ascii'
+chan_default    = '#camhax'
 
 if not auto_connect:
     botname = raw_input('Say my name! (' + bot_default + ') ')
@@ -158,6 +162,10 @@ def inc_utter_counts():
 def get_content(keyword):
     return data.split(':!' + keyword + ' ')[1].strip('\r\n ')
 
+# elimisteve; 2011.03.30
+def cmd_count(msg):
+    return reduce(lambda a,b: a+b, [x.count(y) for x in COMMAND_LIST for y in msg.split()])
+
 while True:
    data = irc.recv ( 4096 )
    datasp = data.split(' :')[0]
@@ -165,6 +173,10 @@ while True:
 
    username = getuser()
    inc_utter_counts()
+
+   if cmd_count(data) > 2:
+       message = username + " has been terminated."
+       irc.send( 'KICK ' + chan_default + ' ' + username + " :" + message + end )
 
    if 'PING' in data:
       irc.send( 'PONG ' + data.split()[1] + end )
@@ -184,7 +196,7 @@ while True:
        irc_msg(" XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX")
        irc_msg("  |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|")
        irc_msg("    \XX\       \X/    \XXX/    \X/       /XX/")
-       irc_msg("       \"\       \"      \X/      \"      /\"")
+       irc_msg("     \"\       \"      \X/      \"      /\"")
 
    if ':!karuption' in data.lower():
        irc_msg("      ___")
@@ -364,6 +376,6 @@ while True:
 
    print data
 
-   if ':!help' in data:
-       irc_msg("Options: !batman !facpalm !frylock !iggy !unccliff !bunny !monkey !spider !karuption (use with caution)  # More to come!")
+   if ':!help' in data.lower():
+       irc_msg("Options: " + ' '.join(COMMAND_LIST) + "  # More to come!")
        inc_bot_response_counts()
