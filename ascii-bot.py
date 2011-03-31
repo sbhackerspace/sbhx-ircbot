@@ -164,7 +164,7 @@ def get_content(keyword):
 
 # elimisteve; 2011.03.30
 def cmd_count(msg):
-    return sum([x.count(y) for x in COMMAND_LIST for y in msg.split()])
+    return sum([x.count(y) for x in msg.split() for y in COMMAND_LIST])
 
 while True:
    data = irc.recv ( 4096 )
