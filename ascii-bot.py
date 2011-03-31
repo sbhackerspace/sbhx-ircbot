@@ -164,7 +164,7 @@ def get_content(keyword):
 
 # elimisteve; 2011.03.30
 def cmd_count(msg):
-    return reduce(lambda a,b: a+b, [x.count(y) for x in COMMAND_LIST for y in msg.split()])
+    return sum([x.count(y) for x in COMMAND_LIST for y in msg.split()])
 
 while True:
    data = irc.recv ( 4096 )
@@ -177,6 +177,7 @@ while True:
    if cmd_count(data) > 2:
        message = username + " has been terminated."
        irc.send( 'KICK ' + chan_default + ' ' + username + " :" + message + end )
+       continue
 
    if 'PING' in data:
       irc.send( 'PONG ' + data.split()[1] + end )
