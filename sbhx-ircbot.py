@@ -72,6 +72,18 @@ left_priv_messages = {}
 utter_counts = {}
 bot_response_counts = {}
 
+a2morse = {'a': '.-', 'g': '--.', 'm': '--', 's': '...', 'y': '-.--',
+           '4': '....-', 'b': '-...', 'h': '....', 'n': '-.',
+           't': '-', 'z': '--..', '5': '.....', 'c': '-.-.',
+           'i': '..', 'o': '---', 'u': '..-', '0': '-----',
+           '6': '-....', 'd': '-..', 'j': '.---', 'p': '.--.',
+           'v': '...-', '1': '.----', '7': '--...', 'e': '.',
+           'k': '-.-', 'q': '--.-', 'w': '.--', '2': '..---',
+           '8': '---..', 'f': '..-.', 'l': '.-..', 'r': '.-.',
+           'x': '-..-', '3': '...--', '9': '----.'}
+
+morse2a = {}
+
 # DO NOT CONFUSE THIS WITH irc.msg
 def irc_msg(msg):
     """Sends msg to channel"""
@@ -552,3 +564,7 @@ while True:
        irc_msg("   | | | | | | | | |")
        irc_msg("   J | | | | | | | F")
        irc_msg("    `---.|.|.|.---\'")
+
+   if ':!morse' in data.lower():
+       ndx = data.lower().index(':!morse')
+       irc_msg(' '.join([a2morse[x] if x in a2morse else x for x in data.lower().replace(':!morse', '')[ndx:]]))
