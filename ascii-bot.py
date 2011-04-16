@@ -168,7 +168,8 @@ def get_content(keyword):
 def cmd_count(msg):
     return sum([x.count(y) for x in msg.split() for y in COMMAND_LIST])
 
-enabled = True
+# Will still respond to a few commands, but won't print ascii art
+ascii_enabled = True
 while True:
    data = irc.recv ( 4096 )
    datasp = data.split(' :')[0]
@@ -193,14 +194,14 @@ while True:
        inc_bot_response_counts()
 
    if ':!ascii_off' in data.lower() and username in ADMINS:
-       enabled = False
+       ascii_enabled = False
        irc_msg(botname + " disabled")
 
    if ':!ascii_on' in data.lower() and username in ADMINS:
-       enabled = True
+       ascii_enabled = True
        irc_msg(botname + " enabled")
 
-   if enabled:
+   if ascii_enabled:
        if ':!batman' in data.lower():
            irc_msg("       _==/          i     i          \==_")
            irc_msg("     /XX/            |\___/|            \XX\ ")
