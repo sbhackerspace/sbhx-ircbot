@@ -7,8 +7,8 @@ import urllib, httplib
 from datetime import datetime
 import time
 
-COMMAND_LIST = """!batman !facpalm !frylock !iggy !unccliff !bunny
-!monkey !spider !karuption
+COMMAND_LIST = """!batman !karuption !monkey !bunny !unccliff
+!iggy !frylock !facpalm !spider !cupcake
 """.split()
 
 ADMINS = ['elimisteve', 'paul_be']
@@ -226,9 +226,6 @@ while True:
            irc_msg("     (   \     )")
            irc_msg("      \___\___/")
 
-       if ':!spider' in data.lower():
-           irc_msg("/X\(-_-)/X\ ")
-
        if ':!monkey' in data.lower():
            irc_msg("@('_')@")
 
@@ -391,6 +388,26 @@ while True:
            irc_msg(' .....................................`=-,...................,%`>--==``')
            time.sleep(5)
            irc_msg('........................................_\..........._,-%.......`\ ')
+
+            # From paul_be
+           if ':!spider' in data.lower():
+               irc_msg("/X\(-_-)/X\ ")
+
+            # Also from paul_be
+           if ':!cupcake' in data.lower():
+               irc_msg("           )")
+               irc_msg("          (.)")
+               irc_msg("          .|.")
+               irc_msg("          l7J")
+               irc_msg("          | |")
+               irc_msg("      _.--| |--._")
+               irc_msg("   .-';  ;`-'& ; `&.")
+               irc_msg("  & &  ;  &   ; ;   \ ")
+               irc_msg("  \      ;    &   &_/")
+               irc_msg("   F\"\"\"---...---\"\"\"J")
+               irc_msg("   | | | | | | | | |")
+               irc_msg("   J | | | | | | | F")
+               irc_msg("    `---.|.|.|.---\'")
 
 
        else: # If disabled

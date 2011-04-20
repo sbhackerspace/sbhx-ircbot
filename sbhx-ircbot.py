@@ -542,28 +542,8 @@ while True:
            #irc_msg("!urbandef searchterm")
            print "FAILED"
 
-    # From paul_be
-   if ':!spider' in data.lower():
-       irc_msg("/X\(-_-)/X\ ")
-
    if ':!whoami' in data.lower() or ':!saymyname' in data.lower():
        irc_msg(username)
-
-    # Also from paul_be
-   if ':!cupcake' in data.lower():
-       irc_msg("           )")
-       irc_msg("          (.)")
-       irc_msg("          .|.")
-       irc_msg("          l7J")
-       irc_msg("          | |")
-       irc_msg("      _.--| |--._")
-       irc_msg("   .-';  ;`-'& ; `&.")
-       irc_msg("  & &  ;  &   ; ;   \ ")
-       irc_msg("  \      ;    &   &_/")
-       irc_msg("   F\"\"\"---...---\"\"\"J")
-       irc_msg("   | | | | | | | | |")
-       irc_msg("   J | | | | | | | F")
-       irc_msg("    `---.|.|.|.---\'")
 
    if ':!morse ' in data.lower():
        ndx = data.lower().index(':!morse')
