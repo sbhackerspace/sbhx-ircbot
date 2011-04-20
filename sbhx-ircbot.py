@@ -357,7 +357,7 @@ while True:
            for word in badlist:
                if word.lower() in data.lower() and \
                        'radioshack' not in data.lower() and \
-		       'fios' not in data.lower():
+                       'fios' not in data.lower():
                    irc_msg('Notice: ' + username +
                            ' is a dipshit for mentioning ' + word)
                    inc_bot_response_counts()
@@ -532,15 +532,17 @@ while True:
        request.add_header('User-agent', 'Mozilla 3.10')
        html = urllib2.urlopen(request).read()
        try:
-           definition = re.findall(r"<div class='definition'>(.*?)</div>",
+           definition = re.findall(r'<div class="definition">(.*?)</div>',
                                    html, re.DOTALL)[0]
            if type(definition) is tuple:
                definition = definition[0]
+           definition = definition.replace('&quot;', '"').replace('\r', ' ')
+           definition = remove_tags(definition)
+           definition =
+           irc_msg(query.replace('+', ' ') + ': ' + str(definition))
        except:
-           irc_msg("!urbandef searchterm")
-       definition = definition.replace('&quot;', '"')
-       definition = remove_tags(definition)
-       irc_msg(query.replace('+', ' ') + ': ' + str(definition))
+           #irc_msg("!urbandef searchterm")
+           print "FAILED"
 
     # From paul_be
    if ':!spider' in data.lower():
@@ -565,6 +567,6 @@ while True:
        irc_msg("   J | | | | | | | F")
        irc_msg("    `---.|.|.|.---\'")
 
-   if ':!morse' in data.lower():
+   if ':!morse ' in data.lower():
        ndx = data.lower().index(':!morse')
-       irc_msg(' '.join([a2morse[x] if x in a2morse else x for x in data.lower().replace(':!morse', '')[ndx:]]))
+       irc_msg(' '.join([a2morse[x] if x in a2morse else x for x in data.lower().replace(':!morse ', '')[ndx:]]))
