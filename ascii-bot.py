@@ -389,25 +389,25 @@ while True:
            time.sleep(5)
            irc_msg('........................................_\..........._,-%.......`\ ')
 
-            # From paul_be
-           if ':!spider' in data.lower():
-               irc_msg("/X\(-_-)/X\ ")
+       # From paul_be
+       if ':!spider' in data.lower():
+           irc_msg("/X\(-_-)/X\ ")
 
-            # Also from paul_be
-           if ':!cupcake' in data.lower():
-               irc_msg("           )")
-               irc_msg("          (.)")
-               irc_msg("          .|.")
-               irc_msg("          l7J")
-               irc_msg("          | |")
-               irc_msg("      _.--| |--._")
-               irc_msg("   .-';  ;`-'& ; `&.")
-               irc_msg("  & &  ;  &   ; ;   \ ")
-               irc_msg("  \      ;    &   &_/")
-               irc_msg("   F\"\"\"---...---\"\"\"J")
-               irc_msg("   | | | | | | | | |")
-               irc_msg("   J | | | | | | | F")
-               irc_msg("    `---.|.|.|.---\'")
+       # Also from paul_be
+       if ':!cupcake' in data.lower():
+           irc_msg("           )")
+           irc_msg("          (.)")
+           irc_msg("          .|.")
+           irc_msg("          l7J")
+           irc_msg("          | |")
+           irc_msg("      _.--| |--._")
+           irc_msg("   .-';  ;`-'& ; `&.")
+           irc_msg("  & &  ;  &   ; ;   \ ")
+           irc_msg("  \      ;    &   &_/")
+           irc_msg("   F\"\"\"---...---\"\"\"J")
+           irc_msg("   | | | | | | | | |")
+           irc_msg("   J | | | | | | | F")
+           irc_msg("    `---.|.|.|.---\'")
 
 
        else: # If disabled
