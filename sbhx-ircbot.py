@@ -507,7 +507,6 @@ while True:
                definition = definition[0]
        except:
            irc_msg("!define searchterm")
-           continue
        if '<li>' in definition:
            try:
                definition = re.findall(r'<ul type="disc" class=std><li>(.*?)(<li>)',
@@ -569,3 +568,20 @@ while True:
    if ':!morse ' in data.lower():
        ndx = data.lower().index(':!morse')
        irc_msg(' '.join([a2morse[x] if x in a2morse else x for x in data.lower().replace(':!morse ', '')[ndx:]]))
+
+   if ':!convert ' in data.lower():
+       query = get_content('convert').replace(' ', '+')
+       url = "http://www.google.com/search?q=convert+"
+       request = urllib2.Request(url + query)
+       request.add_header('User-agent', 'Mozilla 3.10')
+       html = urllib2.urlopen(request).read()
+       try:
+           definition = re.findall(r'<h2 class=r .*?><b>(.*?)</b>',
+                                   html, re.DOTALL)[0]
+           if type(definition) is tuple:
+               definition = definition[0]
+           definition = definition.replace('&quot;', '"')
+           definition = remove_tags(definition)
+           irc_msg(definition)
+       except:
+           irc_msg("!convert [shit you want converted]")
