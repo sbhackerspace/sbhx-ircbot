@@ -539,8 +539,7 @@ while True:
            definition = remove_tags(definition)
            irc_msg(query.replace('+', ' ') + ': ' + str(definition))
        except:
-           #irc_msg("!urbandef searchterm")
-           print "FAILED"
+           irc_msg("!urbandef searchterm")
 
    if ':!whoami' in data.lower() or ':!saymyname' in data.lower():
        irc_msg(username)
