@@ -283,8 +283,8 @@ while True:
    # dict['recipient'] = ['message 1', 'message 2', 'message 3']
    if ':!msg ' in data:
        try:
-           #recip, msg = data.split(':!msg ')[1].strip("\r\n ").split(' ', 1)
-           recip, msg = get_content('msg').split(' ', 1)
+           # recips can be a single nick or a comma-delimited list of nicks
+           recips, msg = get_content('msg').split(' ', 1)
        except:
            #irc_msg("Notice: " + username + " can't get anything right.")
            irc_msg("Options: !time <city>, !msg <recipient> <message>, " +
@@ -294,13 +294,14 @@ while True:
            msg += " (from " + username + " at " + time + " on " + date + ")"
        except:
            msg = username + ' tried to crash the bot. Bastard.'
-       try:
-           left_messages[recip].append(msg)
-       except KeyError:
-           left_messages[recip] = []
-           left_messages[recip].append(msg)
-       except:
-           pass
+       for recip in recips.split(','):
+           try:
+               left_messages[recip].append(msg)
+           except KeyError:
+               left_messages[recip] = []
+               left_messages[recip].append(msg)
+           except:
+               pass
            #irc_msg(username + ' is trying to kill me!')
 
    if ':!privmsg ' in data:
