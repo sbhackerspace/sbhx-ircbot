@@ -345,7 +345,7 @@ while True:
                     left_priv_messages[username][m] + end)
        del left_priv_messages[username]
 
-   if '_bot' not in username.lower():
+   if not username.lower().endswith('bot'):
        if profanity_on:
            for word in profanity:
                if word.lower() in data.lower() and \
@@ -502,25 +502,15 @@ while True:
        request.add_header('User-agent', 'Mozilla 3.10')
        html = urllib2.urlopen(request).read()
        try:
-           definition = re.findall(r'<ul type="disc" class=std><li>(.*?)(<br>)',
+           definition = re.findall(r'<div class=s><div>(.*?)</div>',
                                    html, re.DOTALL)[0]
            if type(definition) is tuple:
                definition = definition[0]
+           definition = definition.replace('&quot;', '"')
+           definition = remove_tags(definition)
+           irc_msg(query.replace('+', ' ') + ': ' + str(definition))
        except:
            irc_msg("!define searchterm")
-       if '<li>' in definition:
-           try:
-               definition = re.findall(r'<ul type="disc" class=std><li>(.*?)(<li>)',
-                                       html, re.DOTALL)[0]
-               if type(definition) is tuple:
-                   definition = definition[0]
-           except:
-               irc_msg("!define searchterm")
-
-       definition = definition.replace('&quot;', '"')
-       definition = remove_tags(definition)
-       irc_msg(query.replace('+', ' ') + ': ' + str(definition))
-
 
    if ':!urbandef' in data and ':!urbandef ' not in data:
        irc_msg("!urbandef searchterm")
@@ -564,4 +554,4 @@ while True:
            definition = remove_tags(definition)
            irc_msg(definition)
        except:
-           irc_msg("!convert [shit you want converted]")
+           irc_msg("!convert [what you want converted]")
