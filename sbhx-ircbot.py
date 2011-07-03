@@ -506,11 +506,13 @@ while True:
                                    html, re.DOTALL)[0]
            if type(definition) is tuple:
                definition = definition[0]
+
            definition = definition.replace('&quot;', '"')
            definition = remove_tags(definition)
            irc_msg(query.replace('+', ' ') + ': ' + str(definition))
        except:
            irc_msg("!define searchterm")
+           continue
 
    if ':!urbandef' in data and ':!urbandef ' not in data:
        irc_msg("!urbandef searchterm")
