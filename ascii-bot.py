@@ -197,6 +197,9 @@ while True:
        msg = get_content('echo')
        irc_msg(msg)
 
+   if 'KICK' in data:
+      irc.send( 'JOIN ' + chatchannel + end )
+
    if ':!ascii_off' in data.lower() and username in ADMINS:
        ascii_enabled = False
        irc_msg(botname + " disabled")
