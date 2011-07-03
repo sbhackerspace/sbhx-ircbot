@@ -193,6 +193,10 @@ while True:
        irc_msg("Options: " + ' '.join(COMMAND_LIST) + "  # More to come!")
        inc_bot_response_counts()
 
+   if ':!echo ' in data:
+       msg = get_content('echo')
+       irc_msg(msg)
+
    if ':!ascii_off' in data.lower() and username in ADMINS:
        ascii_enabled = False
        irc_msg(botname + " disabled")
