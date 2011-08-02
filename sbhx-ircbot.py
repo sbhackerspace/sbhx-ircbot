@@ -509,6 +509,9 @@ while True:
 
            definition = definition.replace('&quot;', '"')
            definition = remove_tags(definition)
+           if '&nbsp;' in definition:
+               ndx = definition.index('&nbsp')
+               definition = definition[:ndx]
            irc_msg(query.replace('+', ' ') + ': ' + str(definition))
        except:
            irc_msg("!define searchterm")
