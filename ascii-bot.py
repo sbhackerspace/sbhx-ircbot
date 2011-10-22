@@ -217,8 +217,8 @@ while True:
            irc_msg("|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|")
            irc_msg(" XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX")
            irc_msg("  |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|")
-           irc_msg("    \XX\       \X/    \XXX/    \X/       /XX/")
-           irc_msg("     \"\        V      \X/      V      /\"")
+           irc_msg("    \XX\       \X/    \XXX/    \X/        /XX/")
+           irc_msg("       *\       V      \X/      V        /* ")
            irc_msg("                        V                  ")
        if ':!karuption' in data.lower():
            irc_msg("      ___")
@@ -373,6 +373,9 @@ while True:
            irc_msg("   J | | | | | | | F")
            irc_msg("    `---.|.|.|.---\'")
 
+       # from avb_wkyhu
+       if ':!kirbyhug' in data.lower():
+			irc_msg("(>^_^)>")
 
        else: # If disabled
            pass
