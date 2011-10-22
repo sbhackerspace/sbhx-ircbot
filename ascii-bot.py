@@ -221,7 +221,7 @@ while True:
            irc_msg(" XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX")
            irc_msg("  |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|")
            irc_msg("    \XX\       \X/    \XXX/    \X/       /XX/")
-           irc_msg("     \"\        V      \X/      V      /\"")
+           irc_msg("       *\       V      \X/      V       /*")
 
        if ':!karuption' in data.lower():
            irc_msg("      ___")
