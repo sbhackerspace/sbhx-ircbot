@@ -8,7 +8,7 @@ from datetime import datetime
 import time
 
 COMMAND_LIST = """!batman !karuption !monkey !bunny !unccliff
-!iggy !frylock !facpalm !spider !cupcake !marx !kurbyhug 
+!iggy !frylock !facpalm !spider !cupcake !marx !kirbyhug
 """.split()
 
 ADMINS = ['elimisteve', 'paul_be']
@@ -220,15 +220,12 @@ while True:
            irc_msg("|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|")
            irc_msg(" XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX")
            irc_msg("  |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|")
-<<<<<<< HEAD
            irc_msg("    \XX\       \X/    \XXX/    \X/        /XX/")
            irc_msg("       *\       V      \X/      V        /* ")
            irc_msg("                        V                  ")
-=======
            irc_msg("    \XX\       \X/    \XXX/    \X/       /XX/")
            irc_msg("       *\       V      \X/      V       /*")
 
->>>>>>> 7c87a4fa274ab2f973272be425a0cb7172c24384
        if ':!karuption' in data.lower():
            irc_msg("      ___")
            irc_msg("     //  7")

@@ -2,7 +2,7 @@ import socket, urllib2, re, os
 import urllib, httplib
 from datetime import datetime
 
-USER = 'sbhx'
+USER = 'spanish'
 auto_connect = True
 
 bot_default     = USER + "_bot"
@@ -84,10 +84,9 @@ a2morse = {'a': '.-', 'g': '--.', 'm': '--', 's': '...', 'y': '-.--',
 
 morse2a = {}
 
-#Spanish Term Array
-
+#Spanish Term Dictionary
 #Informal Spanish Terms (Implies you know the person well, person is a friend, etc)
-	ispanterm = {'how are you' : '¿Cómo estás?', 'hello' : '¡Hola!', 'goodbye' : 'Adiós!',
+spanish_terms = {'how are you' : '¿Cómo estás?', 'hello' : '¡Hola!', 'goodbye' : 'Adiós!',
                  'whats your name' : "¿Cuál es tu nombre?", "mynameis" : "Mi llamo "}
 
 
@@ -550,7 +549,7 @@ while True:
 
    if ':!spanish ' in data.lower():
 	   ndx = data.lower().index(':!spanish')
-	   irc_msg(' '.join([ispanterm[x] if x in ispanterm else x for x in data.lower().replace(':!spanish ', '')[ndx:]]))
+	   irc_msg(' '.join([spanish_terms[x] if x in spanish_terms else x for x in data.lower().replace(':!spanish ', '')[ndx:]]))
 
    if ':!morse ' in data.lower():
        ndx = data.lower().index(':!morse')
