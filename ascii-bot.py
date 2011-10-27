@@ -18,7 +18,7 @@ auto_connect = True
 
 bot_default     = USER + "_bot"
 network_default = 'irc.freenode.net'
-chan_default    = '#sbhackerspace'
+chan_default    = '#sbhx-ascii'
 
 if not auto_connect:
     botname = raw_input('Say my name! (' + bot_default + ') ')
@@ -381,39 +381,44 @@ while True:
 
        # from avb_wkyhu
        if ':!kirbyhug' in data.lower():
-			irc_msg("(>^_^)>")
+            irc_msg("(>^_^)>")
 
+       # from avb_wkyhu
        if ':!marx' in data.lower():
-	   irc_msg('	                      ___.....		')
-       irc_msg("                       .-'        `.	")
-       irc_msg("                      ' `.---------... ")
-       irc_msg("                     (:'            `.\ ")
-       irc_msg("                    '  (               .	")
-       irc_msg("                    (' `.           ':  :	")
-       irc_msg("                   ( (.'- .==._   _= :  `.	")
-       irc_msg("                   `_(   ' _o' `.'_o`-\_:'	")
-       irc_msg("                     :`         .     ::	")
-       irc_msg("                     :: \   .'_,J \  ':.	")
-       irc_msg("                     =-`._.'_.::::.`_:'=.	")
-       irc_msg("                    .-:-.=:-::.__:.=:-:=-	")
-       irc_msg("                     -:/-:.'=:/::.\.-=:=	")
-       irc_msg("                      '././:/.::|,\`:\=.a._	")
-       irc_msg("                      ba''/:|:|::|:\\``888888.	")
-       irc_msg("                  _.a(88/  _.='\.   .a388888888a.	")
-       irc_msg('             _.a8883a8/.:"    `:..a838888888888aa.	')
-       irc_msg("        _.a888888388/''        ')'83888888888888888)	")
-       irc_msg("      .888888888388/           (:838888888888888888)	")
-       irc_msg('     .888888888388P           /8"8888888888888888a88)	')
-       irc_msg("     888888888838P           /8888888888P8888888P88'	")
-       irc_msg("     888888888838           /88388888888a88888888P'	")
-       irc_msg('     888888888838:         /88388888888P888888P"	')
-       irc_msg('      88a88888838a        /88388888888a8888P"	')
-       irc_msg('       "P888888388a      /88388888888a888P" ')
-       irc_msg('         "888883888a...aa88388888888a888P	')
-       irc_msg('           "88838888888888388888888a888P	')
-       irc_msg("            8883888888888388888888a888P	")
-       irc_msg('            "88388888888388888888a888P	')
-
+           irc_msg('                          ___.....        ')
+           irc_msg("                       .-'        `.    ")
+           irc_msg("                      ' `.---------... ")
+           irc_msg("                     (:'            `.\ ")
+           irc_msg("                    '  (               .    ")
+           time.sleep(2)
+           irc_msg("                    (' `.           ':  :    ")
+           irc_msg("                   ( (.'- .==._   _= :  `.    ")
+           irc_msg("                   `_(   ' _o' `.'_o`-\_:'    ")
+           irc_msg("                     :`         .     ::    ")
+           irc_msg("                     :: \   .'_,J \  ':.    ")
+           time.sleep(3)
+           irc_msg("                     =-`._.'_.::::.`_:'=.    ")
+           irc_msg("                    .-:-.=:-::.__:.=:-:=-    ")
+           irc_msg("                     -:/-:.'=:/::.\.-=:=    ")
+           irc_msg("                      '././:/.::|,\`:\=.a._    ")
+           irc_msg("                      ba''/:|:|::|:\\``888888.    ")
+           time.sleep(3)
+           irc_msg("                  _.a(88/  _.='\.   .a388888888a.    ")
+           irc_msg('             _.a8883a8/.:"    `:..a838888888888aa.    ')
+           irc_msg("        _.a888888388/''        ')'83888888888888888)    ")
+           irc_msg("      .888888888388/           (:838888888888888888)    ")
+           irc_msg('     .888888888388P           /8"8888888888888888a88)    ')
+           time.sleep(4)
+           irc_msg("     888888888838P           /8888888888P8888888P88'    ")
+           irc_msg("     888888888838           /88388888888a88888888P'    ")
+           irc_msg('     888888888838:         /88388888888P888888P"    ')
+           irc_msg('      88a88888838a        /88388888888a8888P"    ')
+           irc_msg('       "P888888388a      /88388888888a888P" ')
+           time.sleep(4)
+           irc_msg('         "888883888a...aa88388888888a888P    ')
+           irc_msg('           "88838888888888388888888a888P    ')
+           irc_msg("            8883888888888388888888a888P    ")
+           irc_msg('            "88388888888388888888a888P    ')
        else: # If disabled
            pass
 
