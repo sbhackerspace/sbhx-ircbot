@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import socket, urllib2, re, os
 import urllib, httplib
 from datetime import datetime
@@ -87,14 +90,14 @@ morse2a = {}
 #Spanish Term Dictionary
 #Informal Spanish Terms (Implies you know the person well, person is a friend, etc)
 spanish_terms = {'how are you' : '¿Cómo estás?', 'hello' : '¡Hola!', 'goodbye' : 'Adiós!',
-                 'whats your name' : "¿Cuál es tu nombre?", "mynameis" : "Mi llamo "}
+                 'what is your name' : "¿Cuál es tu nombre?", "my name is" : "Mi llamo "}
 
 
 
 # DO NOT CONFUSE THIS WITH irc.msg
 def irc_msg(msg):
     """Sends msg to channel"""
-    irc.send(premess + msg + end)¡Hola
+    irc.send(premess + msg + end)
     return
 
 def priv_msg(user, msg):
@@ -401,7 +404,7 @@ while True:
        html = urllib2.urlopen(
            'http://sbhackerspace.com/wiki/index.php' +
            '?title=Members&action=edit').read()
- 0      textarea = re.findall(r'<textarea.*>(.*)</textarea>',
+       textarea = re.findall(r'<textarea.*>(.*)</textarea>',
                              html, re.DOTALL)[0]
        for line in textarea.split('\n'):
            member_list.append(line.split(',')[0].split()[-1].replace(']', ''))
@@ -548,8 +551,11 @@ while True:
        irc_msg(username)
 
    if ':!spanish ' in data.lower():
-	   ndx = data.lower().index(':!spanish')
-	   irc_msg(' '.join([spanish_terms[x] if x in spanish_terms else x for x in data.lower().replace(':!spanish ', '')[ndx:]]))
+       ndx = data.lower().index(':!spanish')
+       sentence = data.lower().replace(':!spanish ', '').strip()[ndx:]
+       print '"' + sentence + '"'
+       if sentence in spanish_terms:
+           irc_msg(spanish_terms[sentence])
 
    if ':!morse ' in data.lower():
        ndx = data.lower().index(':!morse')
