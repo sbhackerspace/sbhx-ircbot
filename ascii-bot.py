@@ -8,7 +8,7 @@ from datetime import datetime
 import time
 
 COMMAND_LIST = """!batman !karuption !monkey !bunny !unccliff
-!iggy !frylock !facpalm !spider !cupcake
+!iggy !frylock !facpalm !spider !cupcake !marx !kurbyhug 
 """.split()
 
 ADMINS = ['elimisteve', 'paul_be']
@@ -220,9 +220,15 @@ while True:
            irc_msg("|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|")
            irc_msg(" XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX")
            irc_msg("  |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|")
+<<<<<<< HEAD
+           irc_msg("    \XX\       \X/    \XXX/    \X/        /XX/")
+           irc_msg("       *\       V      \X/      V        /* ")
+           irc_msg("                        V                  ")
+=======
            irc_msg("    \XX\       \X/    \XXX/    \X/       /XX/")
            irc_msg("       *\       V      \X/      V       /*")
 
+>>>>>>> 7c87a4fa274ab2f973272be425a0cb7172c24384
        if ':!karuption' in data.lower():
            irc_msg("      ___")
            irc_msg("     //  7")
@@ -376,6 +382,40 @@ while True:
            irc_msg("   J | | | | | | | F")
            irc_msg("    `---.|.|.|.---\'")
 
+       # from avb_wkyhu
+       if ':!kirbyhug' in data.lower():
+			irc_msg("(>^_^)>")
+
+       if ':!marx' in data.lower():
+	   irc_msg('	                      ___.....		')
+       irc_msg("                       .-'        `.	")
+       irc_msg("                      ' `.---------... ")
+       irc_msg("                     (:'            `.\ ")
+       irc_msg("                    '  (               .	")
+       irc_msg("                    (' `.           ':  :	")
+       irc_msg("                   ( (.'- .==._   _= :  `.	")
+       irc_msg("                   `_(   ' _o' `.'_o`-\_:'	")
+       irc_msg("                     :`         .     ::	")
+       irc_msg("                     :: \   .'_,J \  ':.	")
+       irc_msg("                     =-`._.'_.::::.`_:'=.	")
+       irc_msg("                    .-:-.=:-::.__:.=:-:=-	")
+       irc_msg("                     -:/-:.'=:/::.\.-=:=	")
+       irc_msg("                      '././:/.::|,\`:\=.a._	")
+       irc_msg("                      ba''/:|:|::|:\\``888888.	")
+       irc_msg("                  _.a(88/  _.='\.   .a388888888a.	")
+       irc_msg('             _.a8883a8/.:"    `:..a838888888888aa.	')
+       irc_msg("        _.a888888388/''        ')'83888888888888888)	")
+       irc_msg("      .888888888388/           (:838888888888888888)	")
+       irc_msg('     .888888888388P           /8"8888888888888888a88)	')
+       irc_msg("     888888888838P           /8888888888P8888888P88'	")
+       irc_msg("     888888888838           /88388888888a88888888P'	")
+       irc_msg('     888888888838:         /88388888888P888888P"	')
+       irc_msg('      88a88888838a        /88388888888a8888P"	')
+       irc_msg('       "P888888388a      /88388888888a888P" ')
+       irc_msg('         "888883888a...aa88388888888a888P	')
+       irc_msg('           "88838888888888388888888a888P	')
+       irc_msg("            8883888888888388888888a888P	")
+       irc_msg('            "88388888888388888888a888P	')
 
        else: # If disabled
            pass
