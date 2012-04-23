@@ -1,5 +1,6 @@
 import socket, urllib2, re, os
 import urllib, httplib
+import time
 from datetime import datetime
 
 USER = 'sbhx'
@@ -7,7 +8,7 @@ auto_connect = True
 
 bot_default     = USER + "_bot"
 network_default = 'irc.freenode.net'
-chan_default    = '#sbhackerspace'
+chan_default    = '#prototypemagic'
 
 if not auto_connect:
     botname = raw_input('Say my name! (' + bot_default + ') ')
@@ -54,15 +55,17 @@ Slackware
 
 start_time = str(datetime.now())[:16]
 
-port = 6667
-
-premess = 'PRIVMSG ' + chatchannel + ' :'
 irc = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
-irc.connect( ( network, port ) )
-print irc.recv( 4096 )
-irc.send( 'NICK ' + botname + end )
-irc.send( 'USER ' + USER + 'bot botty bot bot: Python IRC' + end )
-irc.send( 'JOIN ' + chatchannel + end )
+port = 6667
+premess = 'PRIVMSG ' + chatchannel + ' :'
+
+def new_connection(irc_obj):
+    irc_obj.connect( ( network, port ) )
+    print irc_obj.recv( 4096 )
+    irc_obj.send( 'NICK ' + botname + end )
+    irc_obj.send( 'USER ' + USER + 'bot botty bot bot: Python IRC' + end )
+    irc_obj.send( 'JOIN ' + chatchannel + end )
+    return irc_obj
 
 # Used to store messages users leave for one another
 left_messages = {}
@@ -205,7 +208,13 @@ def remove_tags(html):
 
 
 while True:
-   data = irc.recv ( 4096 )
+   try:
+       data = irc.recv ( 4096 )
+   except:
+       time.sleep(15)
+       irc = new_connection(irc)
+       continue
+
    datasp = data.split(' :')[0]
    datasp = str(datasp)
 
