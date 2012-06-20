@@ -303,6 +303,7 @@ while True:
            msg += " (from " + username + " at " + time + " on " + date + ")"
        except:
            msg = username + ' tried to crash the bot. Bastard.'
+       fails = []
        for recip in recips.split(','):
            try:
                left_messages[recip].append(msg)
@@ -310,8 +311,16 @@ while True:
                left_messages[recip] = []
                left_messages[recip].append(msg)
            except:
-               pass
-           #irc_msg(username + ' is trying to kill me!')
+               fails.append(recip)
+               #irc_msg(username + ' is trying to kill me!')
+       if len(fails) > 0:
+           if len(fails) == len(recips):
+               irc_msg("User error.  Replace current user and reboot.")
+           else:
+               irc_msg("Okay, %s.  Skipped %s." % (username, ', '.join(fails)))
+       else:
+           irc_msg("Okay, %s." % username)
+       del fails
 
    if ':!privmsg ' in data:
        try:
@@ -333,6 +342,8 @@ while True:
            left_priv_messages[recip].append(msg)
        except:
            irc_msg(username + 'fucked up my code. Bastard.')
+       else:
+           irc_msg('Okay, %s.' % username)
 
    # Send messages to user but only if they say something in
    # the channel, not because they've joined, quit, etc
