@@ -422,6 +422,7 @@ while True:
        irc_msg("/userlist")
 
    if ':!ircbot ' in data:# and data.split(':!ircbot')[1] == '':
+     try:
        url = get_content('ircbot')
        html = urllib2.urlopen('http://stevendphillips.com/ircbot/@edit/index').read()
        textarea = re.findall(
@@ -445,14 +446,16 @@ while True:
            priv_msg(username, line)
        priv_msg(username, "") # Blank line
        priv_msg(username, 'New Feature List: http://stevendphillips.com/ircbot')
+     except:
+         priv_msg(username, "Nice try :-)")
 
-   if ':!ircbot' in data and ':!ircbot ' not in data:
-       html = urllib2.urlopen('http://stevendphillips.com' +
-                              '/ircbot/@edit/index').read()
-       textarea = re.findall(
-           r'<textarea.*>(.*)</textarea>', html, re.DOTALL)[0].strip('\r\n ')
-       for line in [line.strip() for line in textarea.split('\n')]:
-           priv_msg(username, line)
+   # if ':!ircbot' in data and ':!ircbot ' not in data:
+   #     html = urllib2.urlopen('http://stevendphillips.com' +
+   #                            '/ircbot/@edit/index').read()
+   #     textarea = re.findall(
+   #         r'<textarea.*>(.*)</textarea>', html, re.DOTALL)[0].strip('\r\n ')
+   #     for line in [line.strip() for line in textarea.split('\n')]:
+   #         priv_msg(username, line)
 
    if ':!echo ' in data:
        msg = get_content('echo')
