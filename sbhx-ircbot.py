@@ -8,7 +8,7 @@ auto_connect = True
 
 bot_default     = USER + "_bot"
 network_default = 'irc.freenode.net'
-chan_default    = '#prototypemagic'
+chan_default    = '#sbhackerspace'
 
 if not auto_connect:
     botname = raw_input('Say my name! (' + bot_default + ') ')
