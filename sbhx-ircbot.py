@@ -298,9 +298,9 @@ while True:
            #irc_msg("Notice: " + username + " can't get anything right.")
            irc_msg("Options: !time <city>, !msg <recipient> <message>, " +
                    "!privmsg <recipient> <message>")
-       date, time = str(datetime.now())[:16].split()
+       date, now = str(datetime.now())[:16].split()
        try:
-           msg += " (from " + username + " at " + time + " on " + date + ")"
+           msg += " (from " + username + " at " + now + " on " + date + ")"
        except:
            msg = username + ' tried to crash the bot. Bastard.'
        fails = []
@@ -329,8 +329,8 @@ while True:
            irc_msg("Options: !time <city>, !msg <recipient> <message>, " +
                    "!privmsg <recipient> <message>")
            msg = ""
-       date, time = str(datetime.now())[:16].split()  # Ghetto, but works
-       msg += " (from " + username + " at " + time + " on " + date + ")"
+       date, now = str(datetime.now())[:16].split()  # Ghetto, but works
+       msg += " (from " + username + " at " + now + " on " + date + ")"
        # print "recip ==", recip
        # print
        # print "msg ==", msg
