@@ -35,6 +35,7 @@ var conn net.Conn
 var irc = make(chan string)
 
 func main() {
+	// Listens for webhook POSTs from GitHub
 	go webhookListener()
 
 	// If the constants are valid, this program cannot crash. Period.
@@ -121,8 +122,7 @@ func main() {
 
 func ircSetup() net.Conn {
 	var err error
-	// Avoid the temptation... `conn, err := ...` silently shadows the
-	// global `conn` variable!
+	// Global `conn`
 	conn, err = net.Dial("tcp", IRC_SERVER)
 	if err != nil {
 		log.Fatalf("Error connecting to %s: %v\n", IRC_SERVER, err)
@@ -162,6 +162,7 @@ func webhookListener() {
 }
 
 func webhookHandler(w http.ResponseWriter, r *http.Request) {
+	// Read POST data
 	defer r.Body.Close()
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -169,6 +170,7 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Unmarshal JSON
 	push := &GithubPush{}
 	err = json.Unmarshal(body, push)
 	if err != nil {
@@ -176,6 +178,7 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Generate summary and echo it into IRC_CHANNEL
 	summary := push.SummarizeHeadCommit()
 	log.Printf("Echoing this summary to IRC:\n%s\n\n", summary)
 	irc <- summary
