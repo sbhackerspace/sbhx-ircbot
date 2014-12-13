@@ -178,7 +178,7 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 
 	summary := push.SummarizeHeadCommit()
 	log.Printf("Echoing this summary to IRC:\n%s\n\n", summary)
-	ircMsg(summary)
+	irc <- summary
 }
 
 func (push *GithubPush) SummarizeHeadCommit() string {
