@@ -75,33 +75,6 @@ func main() {
 			rawIrcMsg("PONG " + rawData)
 			continue
 		}
-		//
-		// Parse nick, msg
-		//
-
-		// Avoids ~global var risk by resetting these to "" each loop
-		var msg, nick = "", ""
-
-		// Parse nick when safe to do so
-		// TODO: Look at IRC spec; not sure this is guaranteed to work
-		if fun.ContainsAnyStrings(rawData, "PRIVMSG", "MODE", "JOIN", "KICK") {
-			// structure of `rawData` == :nick!host PRIVMSG #channel :msg
-
-			// nick == everything after first char, before first !
-			nick = strings.SplitN(rawData[1:], "!", 2)[0]
-			fmt.Printf("Nick: '%v'\n", nick)
-		}
-		// Parse msg when safe to do so
-		// TODO: Make this much more precise
-		if fun.ContainsAnyStrings(rawData, "PRIVMSG", "KICK") {
-			// msg == everything after second :
-			msg = strings.SplitN(rawData, ":", 3)[2]
-			fmt.Printf("Message: '%v'\n", msg)
-		}
-
-		//
-		// `nick` and `msg` now (probably) defined
-		//
 
 		//
 		// Re-join if kicked
