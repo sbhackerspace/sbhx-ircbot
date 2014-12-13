@@ -22,16 +22,11 @@ const (
 	BOT_NICK    = "sbhx_github"
 	IRC_CHANNEL = "#sbhackerspace"
 
-	OWNER_NICK = "elimisteve"
-
 	PRIVMSG_PRE      = "PRIVMSG "
 	PRIVMSG_POST     = " :"
 	IRC_CHAN_MSG_PRE = PRIVMSG_PRE + IRC_CHANNEL + PRIVMSG_POST
 	GITHUB_PORT      = "9000"
 )
-
-var NICKS_TO_NOTIFY = []string{"elimisteve", "elimisteve1", "elimisteve11",
-	"elimisteve12"}
 
 // Only one connection allowed (subject to change)
 var conn net.Conn
