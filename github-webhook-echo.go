@@ -38,12 +38,11 @@ func main() {
 	// Listens for webhook POSTs from GitHub
 	go webhookListener()
 
-	// If the constants are valid, this program cannot crash. Period.
-	defer func() {
-		if err := recover(); err != nil {
-			msg := fmt.Sprintf("Recovered from nasty error in main: %v\n", err)
-			// ircMsg(msg)
-			fmt.Print(msg)
+	// Anything passed to the `irc` channel (get it?) is echoed into
+	// IRC_CHANNEL
+	go func() {
+		for {
+			rawIrcMsg(IRC_CHAN_MSG_PRE + <-irc)
 		}
 	}()
 
@@ -51,21 +50,13 @@ func main() {
 	conn = ircSetup()
 	defer conn.Close()
 
-	// Anything passed to the `irc` channel (get it?) is echoed into
-	// IRC_CHANNEL
-	go func() {
-		for {
-			ircMsg(<-irc)
-		}
-	}()
-
 	//
 	// Main loop
 	//
-	b := make([]byte, 512)
+	buf := make([]byte, 512)
 	for {
 		// n bytes read
-		n, err := conn.Read(b)
+		n, err := conn.Read(buf)
 		if err != nil {
 			log.Printf("Error reading conn; reconnecting. Err: %v\n", err)
 			conn.Close()
@@ -73,11 +64,12 @@ func main() {
 			continue
 		}
 
-		rawData := string(b[:n])
+		rawData := string(buf[:n])
 		rawData = strings.TrimRight(rawData, " \t\r\n") // Remove trailing whitespace
 		log.Printf("%v\n", rawData)
+
 		//
-		// Respond to PING
+		// Respond to PING from server to stay connected
 		//
 		if strings.HasPrefix(rawData, "PING") {
 			rawIrcMsg("PONG " + rawData)
@@ -137,13 +129,7 @@ func ircSetup() net.Conn {
 // rawIrcMsg takes a string and writes it to the global TCP connection
 // to the IRC server _verbatim_
 func rawIrcMsg(str string) {
-	conn.Write([]uint8(str + "\n"))
-}
-
-// ircMsg is a helper function that wraps rawIrcMsg, prefacing each
-// message with IRC_CHAN_MSG_PRE (usually `PRIVMSG $IRC_CHANNEL `)
-func ircMsg(msg string) {
-	rawIrcMsg(IRC_CHAN_MSG_PRE + msg)
+	conn.Write([]byte(str + "\n"))
 }
 
 //
