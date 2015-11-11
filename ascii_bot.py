@@ -468,71 +468,36 @@ def dog():
 	irc_msg("  _,-' ,'`-__; '--. ")
 	irc_msg(" (_/'~~      '' '(; ")
 	
+def handbanana():
+	irc_msg("Tonight... YOU!")
+	
 """Ascii art above please"""
 
 # Print random ascii art.
-# Im sure there is a better way to do this but hell it works...	
+# Elimisteve's Method, Thank you!
 def ascii_random():
-	for i in range(19):
-		ranchoice = random.randint(1,19)
-		print ranchoice
-		if ranchoice == 1:
-			batman()
-			break
-		if ranchoice == 2:
-			karuption()
-			break
-		if ranchoice == 3:
-			unccliff()
-			break
-		if ranchoice == 4:
-			iggy()
-			break
-		if ranchoice == 5:
-			bunny()
-			break
-		if ranchoice == 6:
-			monkey()
-			break
-		if ranchoice == 7:
-			frylock()
-			break
-		if ranchoice == 8:
-			cupcake()
-			break
-		if ranchoice == 9:
-			kirbyhug()
-			break
-		if ranchoice == 10:
-			spider()
-			break
-		if ranchoice == 11:
-			marx()
-			break
-		if ranchoice == 12:
-			tardis()
-			break
-		if ranchoice == 13:
-			tux()
-			break
-		if ranchoice == 14:
-			r2d2()
-			break
-		if ranchoice == 15:
-			barklek()
-			break
-		if ranchoice == 16:
-			bender()
-			break
-		if ranchoice == 17:
-			handbanana()
-			break
-		if ranchoice == 18:
-			dog()
-			break
-		if ranchoice == 19:
-			cat()
-			break
+    ascii_f = random.choice([
+        batman,
+        karuption,
+        unccliff,
+        iggy,
+        bunny,
+        monkey,
+        frylock,
+        cupcake,
+        kirbyhug,
+        spider,
+        marx,
+        tardis,
+        tux,
+        r2d2,
+        barklek,
+        bender,
+        handbanana,
+        dog,
+        cat,
+    ])
+    ascii_f()
 	
 
 # Will still respond to a few commands, but won't print ascii art
@@ -614,7 +579,7 @@ while True:
 			marx()
 			
 		if ':!handbanana' in data.lower():
-			irc_msg("TONIGHT... YOU!!!")
+			handbanana()
 		
 		if ':!tardis' in data.lower():
 			tardis()
